@@ -67,6 +67,15 @@ static int opt_hdlr_verbose(void *param, const char *val)
 	return 0;
 }
 
+static int opt_hdlr_pam_confdir(void *param, const char *val)
+{
+	pamtester_app_t *x = (pamtester_app_t *)param;
+
+	x->pam_confdir = xstrdup(val);
+
+	return 0;
+}
+
 static int opt_hdlr_item(void *param, const char *val)
 {
 	pamtester_app_t *x = (pamtester_app_t *)param;
@@ -129,6 +138,7 @@ static int opt_hdlr_env(void *param, const char *val)
 pamtester_opt_spec_t options[] = {
 	{ "I", "item", 1, 1, '*', opt_hdlr_item },
 	{ "E", "env", 1, 1, '*', opt_hdlr_env },
+	{ "c", "pam_confdir", 1, 1, '*', opt_hdlr_pam_confdir },
 	{ "v", "verbose", 1, 0, '?', opt_hdlr_verbose },
 	{ NULL, NULL, 0, 0, 0, NULL }
 };

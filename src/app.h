@@ -62,6 +62,7 @@ typedef struct _pamtester_app_t {
 	pamtester_pam_item_t *envs;
 	pamtester_pam_item_t *last_env;
 	pamtester_op_t *operations;
+	char *pam_confdir;
 } pamtester_app_t;
 
 void pamtester_app_init(pamtester_app_t *params, const char *app_name);

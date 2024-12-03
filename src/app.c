@@ -161,6 +161,7 @@ void pamtester_app_init(pamtester_app_t *params, const char *app_name)
 	params->envs = params->last_env = NULL;
 	params->verbose = 0;
 	params->operations = NULL;
+	params->pam_confdir = NULL;
 }
 
 void pamtester_app_cleanup(pamtester_app_t *params)
@@ -193,6 +194,8 @@ void pamtester_app_cleanup(pamtester_app_t *params)
 		xfree(op->param);
 		xfree(op);
 	}
+
+	xfree(params->pam_confdir);
 }
 
 int pamtester_app_run(pamtester_app_t *params)
@@ -209,8 +212,8 @@ int pamtester_app_run(pamtester_app_t *params)
 		fprintf(stderr, "%s: invoking pam_start(%s, %s, ...)\n", params->app_name, params->service, params->user);
 	}
 
-	if ((err = pam_start((params->service == NULL ? "": params->service),
-			(params->user == NULL ? "": params->user), &conv, &pamh))) {
+	if ((err = pam_start_confdir((params->service == NULL ? "": params->service),
+			(params->user == NULL ? "": params->user), &conv, params->pam_confdir, &pamh))) {
 		err_msg = xstrdup("Initialization failure");
 		pamh = NULL;
 		goto out;
