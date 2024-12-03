@@ -6,3 +6,8 @@ doc/Makefile
 libtool
 src/Makefile
 stamp-h
+
+src/*.o
+src/pamtester
+
+tags
